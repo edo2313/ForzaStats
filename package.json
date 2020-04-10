@@ -1,0 +1,17 @@
+{
+  "name": "forzastats",
+  "version": "0.1.0",
+  "description": "Application to show Forza Horizon 4 statistics using telemetry out",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^8.2.1"
+  },
+  "dependencies": {
+    "material-components-web": "^5.1.0",
+    "node-ipc": "^9.1.1",
+    "ws": "^7.2.3"
+  }
+}
