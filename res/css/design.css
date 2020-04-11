@@ -1,0 +1,26 @@
+body {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    --mdc-theme-primary: #4caf50 !important;
+    --mdc-theme-on-primary: var(--mdc-theme-text-primary-on-dark);
+}
+
+#root {
+    width: 100%;
+}
+
+.mdc-drawer-app-content {
+    flex: auto;
+    overflow: auto;
+    position: relative;
+}
+
+.main-content {
+    overflow: auto;
+    height: 100%;
+}
+
+.app-bar {
+    position: absolute;
+}

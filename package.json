@@ -4,14 +4,48 @@
   "description": "Application to show Forza Horizon 4 statistics using telemetry out",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "devDependencies": {
-    "electron": "^8.2.1"
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "electron-forge": "^5.2.4",
+    "electron-prebuilt-compile": "8.2.0"
   },
   "dependencies": {
+    "@material/drawer": "^5.1.0",
+    "electron-compile": "^6.4.4",
+    "electron-squirrel-startup": "^1.0.0",
     "material-components-web": "^5.1.0",
     "node-ipc": "^9.1.1",
     "ws": "^7.2.3"
+  },
+  "config": {
+    "forge": {
+      "make_targets": {
+        "win32": [
+          "squirrel"
+        ]
+      },
+      "electronPackagerConfig": {
+        "packageManager": "npm"
+      },
+      "electronWinstallerConfig": {
+        "name": "forzastats"
+      },
+      "electronInstallerDebian": {},
+      "electronInstallerRedhat": {},
+      "github_repository": {
+        "owner": "",
+        "name": ""
+      },
+      "windowsStoreConfig": {
+        "packageName": "",
+        "name": "forzastats"
+      }
+    }
   }
 }

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ForzaStats</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+
+    <link href="../res/css/material-components-web.min.css" rel="stylesheet">
+    <script src="../res/js/material-components-web.min.js"></script>
+
+    <link rel="stylesheet" href="../res/css/design.css">
+    <link rel="stylesheet" href="../res/css/font.css">
+    <link rel="stylesheet" href="../res/css/icon.css">
+</head>
+
+<body class="mdc-typography">
+    <div id="root">
+        <div class="drawer-frame-root">
+            <aside class="mdc-drawer mdc-drawer--modal">
+                <div class="mdc-drawer__content">
+                    <nav class="mdc-list">
+                        <a class="mdc-list-item" href="index.html" tabindex="-1" aria-selected="true">
+                            <i class="material-icons mdc-list-item__graphic"aria-hidden="true">home</i>
+                            Home
+                        </a>
+                        <hr class="mdc-list-divider">
+                        <a class="mdc-list-item mdc-list-item--activated" href="#" tabindex="0">
+                            <i class="material-icons mdc-list-item__graphic" aria-hidden="true">settings</i>
+                            Settings
+                        </a>
+                        <a class="mdc-list-item" href="about.html" tabindex="-1">
+                            <i class="material-icons mdc-list-item__graphic" aria-hidden="true">announcement</i>
+                            About
+                        </a>
+                    </nav>
+                </div>
+            </aside>
+            <div class="mdc-drawer-scrim"></div>
+            <div class="drawer-frame-app-content">
+                <header class="mdc-top-app-bar drawer-top-app-bar" id="app-bar">
+                    <div class="mdc-top-app-bar__row">
+                        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                            <button class="mdc-icon-button material-icons mdc-top-app-bar__navigation-icon mdc-ripple-upgraded--unbounded mdc-ripple-upgraded" style="--mdc-ripple-fg-size:28px; --mdc-ripple-fg-scale:1.7142857142857142; --mdc-ripple-left:10px; --mdc-ripple-top:10px;">menu</button>
+                            <span class="mdc-top-app-bar__title">Settings</span>
+                        </section>
+                    </div>
+                </header>
+                <div class="drawer-main-content" id="main-content">
+                    <div class="mdc-top-app-bar--fixed-adjust"></div>
+                    <table id="settings">
+                    </table> 
+                </div>
+                <br />
+                <br />
+                <button onclick="saveSettings()" class="mdc-button mdc-button--raised">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label">Save</span>
+                    <i class="material-icons mdc-button__icon" aria-hidden="true">save</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="mdc-dialog" id="success">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="my-dialog-title"
+            aria-describedby="my-dialog-content">
+            <h2 class="mdc-dialog__title" id="my-dialog-title"></h2>
+            <div class="mdc-dialog__content" id="my-dialog-content">
+                Setting successfully saved!
+            </div>
+            <footer class="mdc-dialog__actions">
+                <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">Yay!</span>
+                </button>
+            </footer>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </div>
+    <div class="mdc-dialog" id="fail">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="my-dialog-title"
+            aria-describedby="my-dialog-content">
+            <h2 class="mdc-dialog__title" id="my-dialog-title"></h2>
+            <div class="mdc-dialog__content" id="my-dialog-content">
+                Error while saving config :(
+            </div>
+            <footer class="mdc-dialog__actions">
+                <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">Oof...</span>
+                </button>
+            </footer>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </div>
+    <script type="text/javascript" src="../res/js/design.js"></script>
+    <script type="text/javascript" src="../res/js/settings.js"></script>
+</body>
+
+</html>

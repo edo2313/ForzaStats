@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ForzaStats</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+
+    <link href="../res/css/material-components-web.min.css" rel="stylesheet">
+    <script src="../res/js/material-components-web.min.js"></script>
+
+    <link rel="stylesheet" href="../res/css/design.css">
+    <link rel="stylesheet" href="../res/css/font.css">
+    <link rel="stylesheet" href="../res/css/icon.css">
+</head>
+
+<body class="mdc-typography">
+    <div id="root">
+        <div class="drawer-frame-root">
+            <aside class="mdc-drawer mdc-drawer--modal">
+                <div class="mdc-drawer__content">
+                    <nav class="mdc-list">
+                        <a class="mdc-list-item" href="index.html" tabindex="-1" aria-selected="true">
+                            <i class="material-icons mdc-list-item__graphic" aria-hidden="true">home</i>
+                            Home
+                        </a>
+                        <hr class="mdc-list-divider">
+                        <a class="mdc-list-item" href="settings.html" tabindex="-1">
+                            <i class="material-icons mdc-list-item__graphic" aria-hidden="true">settings</i>
+                            Settings
+                        </a>
+                        <a class="mdc-list-item mdc-list-item--activated" href="#" tabindex="0">
+                            <i class="material-icons mdc-list-item__graphic" aria-hidden="true">announcement</i>
+                            About
+                        </a>
+                    </nav>
+                </div>
+            </aside>
+            <div class="mdc-drawer-scrim"></div>
+            <div class="drawer-frame-app-content">
+                <header class="mdc-top-app-bar drawer-top-app-bar" id="app-bar">
+                    <div class="mdc-top-app-bar__row">
+                        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                            <button
+                                class="mdc-icon-button material-icons mdc-top-app-bar__navigation-icon mdc-ripple-upgraded--unbounded mdc-ripple-upgraded"
+                                style="--mdc-ripple-fg-size:28px; --mdc-ripple-fg-scale:1.7142857142857142; --mdc-ripple-left:10px; --mdc-ripple-top:10px;">menu</button>
+                            <span class="mdc-top-app-bar__title">About</span>
+                        </section>
+                    </div>
+                </header>
+                <div class="drawer-main-content" id="main-content">
+                    <div class="mdc-top-app-bar--fixed-adjust"></div>
+                    <div class="mdc-layout-grid">
+                        <div class="mdc-layout-grid__inner">
+                            <div class="mdc-layout-grid__cell">
+                                <div class="mdc-card demo-card">
+                                    <div class="mdc-card__primary-action demo-card__primary-action" tabindex="0">
+                                        <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('../res/img/logo.png');">
+                                        </div>
+                                        <div class="demo-card__primary">
+                                            <h2 class="demo-card__title mdc-typography mdc-typography--headline6">Version</h2>
+                                        </div>
+                                        <div class="demo-card__secondary mdc-typography mdc-typography--body2">
+                                            App: <span id="appversion"></span><br/>
+                                            Electron: <span id="electronversion"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mdc-layout-grid__cell">
+                                <div class="mdc-card demo-card">
+                                    <div class="mdc-card__primary-action demo-card__primary-action" tabindex="0">
+                                        <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('../res/img/GitHub_logo.png');">
+                                        </div>
+                                        <div class="demo-card__primary">
+                                            <h2 class="demo-card__title mdc-typography mdc-typography--headline6">GitHub page</h2>
+                                        </div>
+                                        <div class="demo-card__secondary mdc-typography mdc-typography--body2">Visit this project's GitHub page.</div>
+                                    </div>
+                                    <div class="mdc-card__actions">
+                                        <div class="mdc-card__action-buttons">
+                                            <a class="mdc-button mdc-card__action mdc-card__action--button" href="https://github.com/edo-2313/ForzaStats">
+                                                <span class="mdc-button__ripple"></span> Click here
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h1 class="mdc-typography--subtitle1" style="text-align: center;">Made with ❤️ in my bedroom during quarantine</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../res/js/info.js"></script>
+    <script type="text/javascript" src="../res/js/design.js"></script>
+</body>
+
+</html>

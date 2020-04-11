@@ -1,7 +1,10 @@
 const { app, BrowserWindow } = require('electron');
 
-var WSS = require('ws').Server;
+const config = require('./config.json');
 
+var fs = require('fs');
+
+var WSS = require('ws').Server;
 var wss = new WSS({port: 9999});
 
 wss.on('connection', function (socket) {
@@ -9,16 +12,41 @@ wss.on('connection', function (socket) {
 
     socket.on('message', function (message) {
         console.log('Received: ' + message);
+        let objMessage = JSON.parse(message);
+        if( Object.keys(objMessage)[0] == 'settings'){
+            handleSettings(objMessage);
+        }
     });
-
     socket.on('close', function () {
         console.log('Closed Connection');
     });
 
 });
 
-
-const config = require('./config.json');
+function handleSettings(message) {
+    var payload;
+    if(message.settings == 'read') {
+        payload = JSON.parse(fs.readFileSync('config.json'));
+        wss.clients.forEach(function each(client) {
+            client.send(JSON.stringify(payload));
+        });
+    }
+    else if(message.settings == 'write') {
+        payload = JSON.stringify(message.payload);
+        fs.writeFile("config.json", payload, 'utf8', function (err) {
+            if (err) {
+                console.log("An error occured while writing JSON Object to File.");
+                wss.clients.forEach(function each(client) {
+                    client.send(JSON.stringify({"saved": 0}));
+                });
+            }
+            console.log("JSON file has been saved.");
+            wss.clients.forEach(function each(client) {
+                client.send(JSON.stringify({"saved": 1}));
+            });
+        });
+    }
+}
 
 function mapData(message) {
     var mapped = {}
@@ -115,26 +143,26 @@ function mapData(message) {
 
 //UDP Handling
 
-    var PORT = config.port;
-    var HOST = config.address;
-    var dgram = require('dgram');
-    var server = dgram.createSocket('udp4');
+var PORT = config.port;
+var HOST = config.address;
+var dgram = require('dgram');
+var server = dgram.createSocket('udp4');
 
-    //Open Connection
-    server.on('listening', function () {
-        var address = server.address();
-        console.log('UDP Server listening on ' + address.address + ':' + address.port);
+//Open Connection
+server.on('listening', function () {
+    var address = server.address();
+    console.log('UDP Server listening on ' + address.address + ':' + address.port);
+});
+
+//Handle message
+server.on('message', function (message, remote) {
+    data = JSON.stringify(mapData(message));
+    wss.clients.forEach(function each(client) {
+        client.send(data);
     });
+});
 
-    //Handle message
-    server.on('message', function (message, remote) {
-        data = JSON.stringify(mapData(message));
-        wss.clients.forEach(function each(client) {
-            client.send(data);
-        });
-    });
-
-    server.bind(PORT, HOST);
+server.bind(PORT, HOST);
 
 //UDP End
 
@@ -142,15 +170,16 @@ function mapData(message) {
 function createWindow() {
     // Crea la finestra del browser
     let win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 900,
+        height: 700,
+        icon: 'res/logo.png',
         webPreferences: {
             nodeIntegration: true
         }
     })
 
     // e carica l'index.html dell'app.
-    win.loadFile('index.html')
+    win.loadFile('pages/index.html')
     win.setMenuBarVisibility(false)
 }
 
