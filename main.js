@@ -129,7 +129,6 @@ function mapData(message) {
     //Handle message
     server.on('message', function (message, remote) {
         data = JSON.stringify(mapData(message));
-        //console.log('Accel: ' + data.accel + ' Brake: ' + data.brake + ' Gear: ' + data.gear + ' Turbo: ' + data.boost);
         wss.clients.forEach(function each(client) {
             client.send(data);
         });
@@ -152,9 +151,7 @@ function createWindow() {
 
     // e carica l'index.html dell'app.
     win.loadFile('index.html')
+    win.setMenuBarVisibility(false)
 }
 
 app.whenReady().then(createWindow)
-
-
-//0-323

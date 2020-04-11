@@ -8,13 +8,12 @@ var socket = new WebSocket('ws://localhost:9999/');
 // When a connection is made
 socket.onopen = function () {
     console.log('Opened connection');
-    socket.send('Hello!');
 }
 
 // When data is received
 socket.onmessage = function (event) {
     data = JSON.parse(event.data);
-    document.getElementById('gear').innerHTML = data.gear;
+    document.getElementById('gear').innerHTML = data.gear == 0 ? 'R' : data.gear;
     document.getElementById('speed').innerHTML = (data.speed * 3.6).toFixed(1);
     document.getElementById('powerhp').innerHTML = captozero((data.power / 1000 * 1.34102).toFixed(1));
     document.getElementById('powerkw').innerHTML = captozero((data.power / 1000).toFixed(1));

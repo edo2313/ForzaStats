@@ -4,14 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <title>ForzaStats</title>
-    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link href="res/material-components-web.min.css" rel="stylesheet">
+    <link href="res/style.css" rel="stylesheet">
+    <script src="res/material-components-web.min.js"></script>
+    <script src="res/design.js"></script>
+    <link rel="stylesheet" href="res/icon.css">
 </head>
 
-<body>
-    Gear <b id="gear"></b><br/>
-    Speed <b id="speed"></b><br/>
-    Potenza (hp) <b id="powerhp"></b>    Potenza (kW) <b id="powerkw"></b>
+<body class="mdc-typography">
+    <div class="mdc-drawer-app-content">
+        <header class="mdc-top-app-bar">
+            <div class="mdc-top-app-bar__row">
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                    <button
+                        class="mdc-icon-button material-icons mdc-top-app-bar__navigation-icon--unbounded">menu</button><span
+                        class="mdc-top-app-bar__title">ForzaStats</span> </section>
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+                    <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded"
+                        aria-label="Download">file_download</button>
+                    <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded"
+                        aria-label="Print this page">print</button>
+                    <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded"
+                        aria-label="Bookmark this page">bookmark</button>
+                </section>
+            </div>
+        </header>
+        <main class="main-content">
+            <div class="mdc-top-app-bar--fixed-adjust">
+                Gear <b id="gear"></b><br/>
+                Speed <b id="speed"></b><br/>
+                Potenza (hp) <b id="powerhp"></b>    Potenza (kW) <b id="powerkw"></b>
+            </div>
+        </main>
+    </div>
     <script type="text/javascript" src="res/script.js"></script>
 </body>
 
