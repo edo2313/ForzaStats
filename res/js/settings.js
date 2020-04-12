@@ -29,9 +29,9 @@ socket.onmessage = function (event) {
         return;
     }
     else {
-        for (let prop in data) {
+        for (let prop in data.settings) {
             let name = '<tr><td>'+prop+'</td>'
-            let field = '<td><label class="mdc-text-field"> <div class = "mdc-text-field__ripple"> </div> <input class="mdc-text-field__input" type="text" id="' + prop + '" value="' + data[prop] + '"></label></td></tr>'
+            let field = '<td><label class="mdc-text-field"> <div class = "mdc-text-field__ripple"> </div> <input class="mdc-text-field__input" type="text" id="' + prop + '" value="' + data.settings[prop] + '"></label></td></tr>'
             document.getElementById('settings').innerHTML += name + field ;
         }
     }

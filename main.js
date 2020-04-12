@@ -24,16 +24,16 @@ wss.on('connection', function (socket) {
 });
 
 function handleSettings(message) {
-    var payload;
+    var payload = {"settings": {}};
     if(message.settings == 'read') {
-        payload = JSON.parse(fs.readFileSync('config.json'));
+        payload.settings = JSON.parse(fs.readFileSync('config.json'));
         wss.clients.forEach(function each(client) {
             client.send(JSON.stringify(payload));
         });
     }
     else if(message.settings == 'write') {
-        payload = JSON.stringify(message.payload);
-        fs.writeFile("config.json", payload, 'utf8', function (err) {
+        payload.settings = JSON.stringify(message.payload);
+        fs.writeFile("config.json", payload.settings, 'utf8', function (err) {
             if (err) {
                 console.log("An error occured while writing JSON Object to File.");
                 wss.clients.forEach(function each(client) {
@@ -105,7 +105,7 @@ function mapData(message) {
     mapped.suspensionTravelMetersRL = message.readFloatLE(204);
     mapped.suspensionTravelMetersRR = message.readFloatLE(208);
     mapped.carOrdinal = message.readInt32LE(212);               // Unique ID of the car make/model
-    mapped.carClass = message.readInt32LE(216);                 // Between 0 (D -- worst cars) and 7 (X class -- best cars) inclusive 
+    mapped.carClass = message.readInt32LE(216);                 // Between 0 (D -- worst cars) and 6 (X class -- best cars) inclusive 
     mapped.carPerformanceIndex = message.readInt32LE(220);      // BEtween 100 (slowest car) and 999 (fastest car) inclusive
     mapped.drivetrainType = message.readInt32LE(224);           // Corresponds to EDrivetrainType; 0 = FWD, 1 = RWD, 2 = AWD
     mapped.numCylinders = message.readInt32LE(228);             // Number of cylinders in the engine
@@ -156,7 +156,7 @@ server.on('listening', function () {
 
 //Handle message
 server.on('message', function (message, remote) {
-    data = JSON.stringify(mapData(message));
+    let data = JSON.stringify(mapData(message));
     wss.clients.forEach(function each(client) {
         client.send(data);
     });
