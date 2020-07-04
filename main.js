@@ -106,7 +106,7 @@ function mapData(message) {
     mapped.suspensionTravelMetersRR = message.readFloatLE(208);
     mapped.carOrdinal = message.readInt32LE(212);               // Unique ID of the car make/model
     mapped.carClass = message.readInt32LE(216);                 // Between 0 (D -- worst cars) and 6 (X class -- best cars) inclusive 
-    mapped.carPerformanceIndex = message.readInt32LE(220);      // BEtween 100 (slowest car) and 999 (fastest car) inclusive
+    mapped.carPerformanceIndex = message.readInt32LE(220);      // Between 100 (slowest car) and 999 (fastest car) inclusive
     mapped.drivetrainType = message.readInt32LE(224);           // Corresponds to EDrivetrainType; 0 = FWD, 1 = RWD, 2 = AWD
     mapped.numCylinders = message.readInt32LE(228);             // Number of cylinders in the engine
 
@@ -172,7 +172,7 @@ function createWindow() {
     let win = new BrowserWindow({
         width: 900,
         height: 700,
-        icon: 'res/logo.png',
+        icon: 'res/img/logo.png',
         webPreferences: {
             nodeIntegration: true
         }

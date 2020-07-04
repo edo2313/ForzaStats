@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@material/drawer": "^5.1.0",
+    "chart.js": "^2.9.3",
     "electron-compile": "^6.4.4",
     "electron-squirrel-startup": "^1.0.0",
     "material-components-web": "^5.1.0",

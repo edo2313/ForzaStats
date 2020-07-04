@@ -2,8 +2,10 @@ body {
     display: flex;
     height: 100vh;
     margin: 0;
+    background-color: #f8f8f8;
     --mdc-theme-primary: #4caf50 !important;
-    --mdc-theme-on-primary: var(--mdc-theme-text-primary-on-dark);
+    --mdc-theme-secondary: #ff0000 !important;
+    --mdc-theme-on-primary: var(--mdc-theme-text-primary-on-dark) !important;
 }
 
 #root {
@@ -23,4 +25,8 @@ body {
 
 .app-bar {
     position: absolute;
+}
+
+.demo-card__primary-action {
+    padding: 16px;
 }

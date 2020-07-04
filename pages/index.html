@@ -22,7 +22,7 @@
                 <div class="mdc-drawer__content">
                     <nav class="mdc-list">
                         <a class="mdc-list-item mdc-list-item--activated" href="#" tabindex="0" aria-selected="true">
-                            <i class="material-icons mdc-list-item__graphic"aria-hidden="true">home</i>
+                            <i class="material-icons mdc-list-item__graphic" aria-hidden="true">home</i>
                             Home
                         </a>
                         <hr class="mdc-list-divider">
@@ -49,10 +49,35 @@
                 </header>
                 <div class="drawer-main-content" id="main-content">
                     <div class="mdc-top-app-bar--fixed-adjust"></div>
-                    <p>
-                        <h4>Car details</h4>
-                        <span id="cardetails"></span>
-                    </p>
+                    <div class="mdc-layout-grid">
+                        <div class="mdc-layout-grid__inner">
+                            <div class="mdc-layout-grid__cell">
+                                <div class="mdc-card demo-card">
+                                    <div class="mdc-card__primary-action demo-card__primary-action" tabindex="0">
+                                        <div class="demo-card__primary">
+                                            <h2 class="demo-card__title mdc-typography mdc-typography--headline6">Car details</h2>
+                                        </div>
+                                        <div class="demo-card__secondary mdc-typography mdc-typography--body2">
+                                            <span id="cardetails"></span><br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mdc-layout-grid__cell">
+                                <div class="mdc-card demo-card">
+                                    <div class="mdc-card__primary-action demo-card__primary-action" tabindex="0">
+                                        <div class="demo-card__primary">
+                                            <h2 class="demo-card__title mdc-typography mdc-typography--headline6">Season</h2>
+                                        </div>
+                                        <div class="demo-card__secondary mdc-typography mdc-typography--body2">
+                                            Currently it's <span id="currseason"></span><br />
+                                            Next season starts in <span id="nextseason"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="mdc-data-table">
                     <table class="mdc-data-table__table" aria-label="Dessert calories">
                         <thead>
@@ -60,6 +85,7 @@
                             <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Parameter</th>
                             <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Value</th>
                             <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Unit</th>
+                            <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Max</th>
                         </tr>
                         </thead>
                         <tbody class="mdc-data-table__content">
@@ -67,31 +93,43 @@
                             <td class="mdc-data-table__cell">Speed</td>
                             <td class="mdc-data-table__cell mdc-data-table__cell--numeric"><span id="speed"></span></td>
                             <td class="mdc-data-table__cell">km/h</td>
+                            <td class="mdc-data-table__cell mdc-data-table__cell--numeric"><span id="speedmax"></span></td>
                         </tr>
                         <tr class="mdc-data-table__row">
                             <td class="mdc-data-table__cell">Gear</td>
                             <td class="mdc-data-table__cell mdc-data-table__cell--numeric"><span id="gear"></span></td>
+                            <td class="mdc-data-table__cell"></td>
                             <td class="mdc-data-table__cell"></td>
                         </tr>
                         <tr class="mdc-data-table__row">
                             <td class="mdc-data-table__cell">Power</td>
                             <td class="mdc-data-table__cell mdc-data-table__cell--numeric"><span id="powerkw"></span></td>
                             <td class="mdc-data-table__cell">kW</td>
+                            <td class="mdc-data-table__cell mdc-data-table__cell--numeric"><span id="powerkwmax"></span></td>
                         </tr>
                         <tr class="mdc-data-table__row">
                             <td class="mdc-data-table__cell">Power</td>
                             <td class="mdc-data-table__cell mdc-data-table__cell--numeric"><span id="powerhp"></span></td>
                             <td class="mdc-data-table__cell">hp</td>
+                            <td class="mdc-data-table__cell mdc-data-table__cell--numeric"><span id="powerhpmax"></span></td>
                         </tr>
                         <tr class="mdc-data-table__row">
                             <td class="mdc-data-table__cell">Engine</td>
                             <td class="mdc-data-table__cell mdc-data-table__cell--numeric"><span id="enginerpm"></span></td>
                             <td class="mdc-data-table__cell">rpm</td>
+                            <td class="mdc-data-table__cell mdc-data-table__cell--numeric"><span id="enginerpmmax"></span></td>
                         </tr>
                         </tbody>
                     </table>
                     </div>
+                    <br/>
                     <span id="paused"></span>
+                    <button onclick="resetMax()" class="mdc-button mdc-button--raised">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Reset Max</span>
+                        <i class="material-icons mdc-button__icon" aria-hidden="true">refresh</i>
+                    </button>
+                    <!-- <canvas id="myChart" width="100" height="100"></canvas> -->
                 </div>
             </div>
         </div>
