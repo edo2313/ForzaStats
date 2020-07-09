@@ -178,7 +178,7 @@ function createWindow() {
         }
     })
 
-    // e carica l'index.html dell'app.
+    // e carica l'index.html dell'app
     win.loadFile('pages/index.html')
     win.setMenuBarVisibility(false)
 }

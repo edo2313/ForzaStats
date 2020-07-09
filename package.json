@@ -22,7 +22,7 @@
     "electron-squirrel-startup": "^1.0.0",
     "material-components-web": "^5.1.0",
     "node-ipc": "^9.1.1",
-    "ws": "^7.2.3"
+    "ws": "^7.3.1"
   },
   "config": {
     "forge": {
