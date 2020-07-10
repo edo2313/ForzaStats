@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Application to show Forza Horizon 4 statistics using telemetry out",
   "main": "main.js",
+  "repository": "github:edo2313/ForzaStats",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -17,11 +18,14 @@
   },
   "dependencies": {
     "@material/drawer": "^5.1.0",
+    "bufferutil": "^4.0.1",
     "chart.js": "^2.9.3",
+    "electron": "^9.1.0",
     "electron-compile": "^6.4.4",
     "electron-squirrel-startup": "^1.0.0",
     "material-components-web": "^5.1.0",
     "node-ipc": "^9.1.1",
+    "utf-8-validate": "^5.0.2",
     "ws": "^7.3.1"
   },
   "config": {
