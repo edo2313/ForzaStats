@@ -145,7 +145,7 @@ window.addEventListener('beforeunload', function () {
     socket.close();
 });
 
-
+/*
 import {MDCDataTable} from '@material/data-table';
 const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table'));
 
@@ -187,3 +187,4 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+*/

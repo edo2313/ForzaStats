@@ -2,55 +2,51 @@
   "name": "forzastats",
   "version": "0.1.0",
   "description": "Application to show Forza Horizon 4 statistics using telemetry out",
-  "main": "main.js",
+  "main": "src/main.js",
   "repository": "github:edo2313/ForzaStats",
+  "license": "MIT",
+  "author": {
+    "name": "edo2313",
+    "url": "https://github.com/edo-2313"
+  },
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
-  "devDependencies": {
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "electron-forge": "^5.2.4",
-    "electron-prebuilt-compile": "8.2.0"
-  },
   "dependencies": {
     "@material/drawer": "^5.1.0",
     "bufferutil": "^4.0.1",
     "chart.js": "^2.9.3",
-    "electron": "^9.1.0",
-    "electron-compile": "^6.4.4",
     "electron-squirrel-startup": "^1.0.0",
     "material-components-web": "^5.1.0",
+    "node-gyp": "^7.0.0",
     "node-ipc": "^9.1.1",
     "utf-8-validate": "^5.0.2",
     "ws": "^7.3.1"
   },
   "config": {
     "forge": {
-      "make_targets": {
-        "win32": [
-          "squirrel"
-        ]
+      "packagerConfig": {
+        "dir": "./src"
       },
-      "electronPackagerConfig": {
-        "packageManager": "npm"
-      },
-      "electronWinstallerConfig": {
-        "name": "forzastats"
-      },
-      "electronInstallerDebian": {},
-      "electronInstallerRedhat": {},
-      "github_repository": {
-        "owner": "",
-        "name": ""
-      },
-      "windowsStoreConfig": {
-        "packageName": "",
-        "name": "forzastats"
-      }
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "iconUrl": "./logo.ico"
+          }
+        }
+      ],
+      "publishers": []
     }
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.52",
+    "@electron-forge/maker-deb": "^6.0.0-beta.52",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.52",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.52",
+    "@electron-forge/maker-zip": "^6.0.0-beta.52",
+    "electron": "9.1.1"
   }
 }

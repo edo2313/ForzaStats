@@ -1,10 +1,6 @@
-import {
-    MDCTopAppBar
-} from "@material/top-app-bar";
+const MDCTopAppBar = require('@material/top-app-bar').MDCTopAppBar;
 
-import {
-    MDCDrawer
-} from "@material/drawer";
+const MDCDrawer = require('@material/drawer').MDCDrawer;
 
 const drawer = MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
 const topAppBar = MDCTopAppBar.attachTo(document.getElementById('app-bar'));

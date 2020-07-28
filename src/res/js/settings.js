@@ -1,8 +1,5 @@
-import {MDCDialog} from '@material/dialog';
-
-import {
-    MDCRipple
-} from '@material/ripple';
+const MDCDialog = require('@material/dialog').MDCDialog;
+const MDCRipple = require('@material/ripple').MDCRipple;
 
 const buttonRipple = new MDCRipple(document.querySelector('.mdc-button'));
 

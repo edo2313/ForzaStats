@@ -1,5 +1,7 @@
 const { app, BrowserWindow } = require('electron');
 
+if (require('electron-squirrel-startup')) return app.quit(); //Required for squirrel installation
+
 const config = require('./config.json');
 
 var fs = require('fs');
@@ -26,7 +28,7 @@ wss.on('connection', function (socket) {
 function handleSettings(message) {
     var payload = {"settings": {}};
     if(message.settings == 'read') {
-        payload.settings = JSON.parse(fs.readFileSync('config.json'));
+        payload.settings = JSON.parse(fs.readFileSync('./src/config.json'));
         wss.clients.forEach(function each(client) {
             client.send(JSON.stringify(payload));
         });
@@ -166,21 +168,20 @@ server.bind(PORT, HOST);
 
 //UDP End
 
-
 function createWindow() {
     // Crea la finestra del browser
     let win = new BrowserWindow({
         width: 900,
         height: 700,
-        icon: 'res/img/logo.png',
+        //icon: '__dirname/res/img/logo.png',
         webPreferences: {
             nodeIntegration: true
         }
     })
-
     // e carica l'index.html dell'app
-    win.loadFile('pages/index.html')
+    win.loadFile('./src/pages/index.html')
     win.setMenuBarVisibility(false)
 }
 
 app.whenReady().then(createWindow)
+console.log(process.cwd());
