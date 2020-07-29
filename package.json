@@ -34,7 +34,9 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "iconUrl": "./logo.ico"
+            "iconUrl": "https://raw.githubusercontent.com/edo-2313/ForzaStats/master/logo.ico",
+            "setupIcon": "logo.ico",
+            "name": "ForzaStats"
           }
         }
       ],

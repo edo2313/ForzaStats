@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require('electron');
 
 if (require('electron-squirrel-startup')) return app.quit(); //Required for squirrel installation
 
+const path = require("path");
 const config = require('./config.json');
 
 var fs = require('fs');
@@ -28,14 +29,15 @@ wss.on('connection', function (socket) {
 function handleSettings(message) {
     var payload = {"settings": {}};
     if(message.settings == 'read') {
-        payload.settings = JSON.parse(fs.readFileSync('./src/config.json'));
+        payload.settings = JSON.parse(fs.readFileSync(path.resolve(__dirname, './config.json')));
         wss.clients.forEach(function each(client) {
             client.send(JSON.stringify(payload));
         });
     }
     else if(message.settings == 'write') {
         payload.settings = JSON.stringify(message.payload);
-        fs.writeFile("config.json", payload.settings, 'utf8', function (err) {
+        fs.writeFile(path.resolve(__dirname, './config.json'), payload.settings, 'utf8',
+            function (err) {
             if (err) {
                 console.log("An error occured while writing JSON Object to File.");
                 wss.clients.forEach(function each(client) {
@@ -173,13 +175,13 @@ function createWindow() {
     let win = new BrowserWindow({
         width: 900,
         height: 700,
-        //icon: '__dirname/res/img/logo.png',
+        icon: path.resolve(__dirname, './res/img/logo.png'),
         webPreferences: {
             nodeIntegration: true
         }
     })
     // e carica l'index.html dell'app
-    win.loadFile('./src/pages/index.html')
+    win.loadFile(path.resolve(__dirname, './pages/index.html'))
     win.setMenuBarVisibility(false)
 }
 
