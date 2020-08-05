@@ -12,7 +12,8 @@
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "publish": "electron-forge publish"
   },
   "dependencies": {
     "@material/drawer": "^5.1.0",
@@ -40,7 +41,18 @@
           }
         }
       ],
-      "publishers": []
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "edo-2313",
+              "name": "ForzaStats"
+            },
+            "prerelease": "true"
+          }
+        }
+      ]
     }
   },
   "devDependencies": {
@@ -49,6 +61,7 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.52",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.52",
     "@electron-forge/maker-zip": "^6.0.0-beta.52",
+    "@electron-forge/publisher-github": "^6.0.0-beta.52",
     "electron": "9.1.1"
   }
 }
