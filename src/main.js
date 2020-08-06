@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require('electron');
 
 if (require('electron-squirrel-startup')) return app.quit(); //Required for squirrel installation
+require('update-electron-app')();
 
 const path = require("path");
 const config = require('./config.json');
