@@ -1,4 +1,7 @@
-const { app, BrowserWindow } = require('electron');
+const {
+    app,
+    BrowserWindow
+} = require('electron');
 
 if (require('electron-squirrel-startup')) return app.quit(); //Required for squirrel installation
 require('update-electron-app')();
@@ -9,7 +12,9 @@ const config = require('./config.json');
 var fs = require('fs');
 
 var WSS = require('ws').Server;
-var wss = new WSS({port: 9999});
+var wss = new WSS({
+    port: 9999
+});
 
 wss.on('connection', function (socket) {
     console.log('Opened connection');
@@ -17,9 +22,12 @@ wss.on('connection', function (socket) {
     socket.on('message', function (message) {
         console.log('Received: ' + message);
         let objMessage = JSON.parse(message);
-        if( Object.keys(objMessage)[0] == 'settings'){
+        if (Object.keys(objMessage)[0] == 'settings') {
             handleSettings(objMessage);
+        } else if (Object.keys(objMessage)[0] == 'enableLocalhost') {
+            enableLocalhost();
         }
+
     });
     socket.on('close', function () {
         console.log('Closed Connection');
@@ -27,81 +35,112 @@ wss.on('connection', function (socket) {
 
 });
 
+//Needed on Windows 8 and above. Without this, telemetry data can only be passed to other IPs and not to localhost (127.0.0.1)
+//Credit to some racing sim forum I once found and to https://github.com/chrisbecke/ForzaStatsDTelemetry from where I copied the exact app ID
+
+function enableLocalhost() {
+    let sudo = require('sudo-prompt');
+
+    let options = {
+        name: 'Electron',
+    };
+
+    sudo.exec('CheckNetIsolation.exe LoopbackExempt -a -n=microsoft.apollobasegame_8wekyb3d8bbwe', options,
+        function (error, stdout, stderr) {
+            if (error) throw error;
+            if (stdout.startsWith('OK.')) {
+                wss.clients.forEach(function each(client) {
+                    client.send('OK');
+                });
+            }
+        }
+    );
+}
+
+//Read and write settings
+
 function handleSettings(message) {
-    var payload = {"settings": {}};
-    if(message.settings == 'read') {
+    var payload = {
+        "settings": {}
+    };
+    if (message.settings == 'read') {
         payload.settings = JSON.parse(fs.readFileSync(path.resolve(__dirname, './config.json')));
         wss.clients.forEach(function each(client) {
             client.send(JSON.stringify(payload));
         });
-    }
-    else if(message.settings == 'write') {
+    } else if (message.settings == 'write') {
         payload.settings = JSON.stringify(message.payload);
         fs.writeFile(path.resolve(__dirname, './config.json'), payload.settings, 'utf8',
             function (err) {
-            if (err) {
-                console.log("An error occured while writing JSON Object to File.");
+                if (err) {
+                    console.log("An error occured while writing JSON Object to File.");
+                    wss.clients.forEach(function each(client) {
+                        client.send(JSON.stringify({
+                            "saved": 0
+                        }));
+                    });
+                }
+                console.log("JSON file has been saved.");
                 wss.clients.forEach(function each(client) {
-                    client.send(JSON.stringify({"saved": 0}));
+                    client.send(JSON.stringify({
+                        "saved": 1
+                    }));
                 });
-            }
-            console.log("JSON file has been saved.");
-            wss.clients.forEach(function each(client) {
-                client.send(JSON.stringify({"saved": 1}));
             });
-        });
     }
 }
+
+//Map incoming telemetry data. Boy, there are a LOT of things here
 
 function mapData(message) {
     var mapped = {}
 
-    mapped.isRaceOn = message.readInt32LE(0);                   // = 1 when race is on. = 0 when in menus/race stopped
-    mapped.timestampMS = message.readUInt32LE(4);               // Can overflow to 0 eventually
+    mapped.isRaceOn = message.readInt32LE(0); // = 1 when race is on. = 0 when in menus/race stopped
+    mapped.timestampMS = message.readUInt32LE(4); // Can overflow to 0 eventually
     mapped.engineMaxRpm = message.readFloatLE(8);
     mapped.engineIdleRpm = message.readFloatLE(12);
     mapped.currentEngineRpm = message.readFloatLE(16);
-    mapped.accelerationX = message.readFloatLE(20);             // In the car's local space; X = right, Y = up, Z = forward
+    mapped.accelerationX = message.readFloatLE(20); // In the car's local space; X = right, Y = up, Z = forward
     mapped.accelerationY = message.readFloatLE(24);
     mapped.accelerationZ = message.readFloatLE(28);
-    mapped.velocityX = message.readFloatLE(32);                 // In the car's local space; X = right, Y = up, Z = forward
+    mapped.velocityX = message.readFloatLE(32); // In the car's local space; X = right, Y = up, Z = forward
     mapped.velocityY = message.readFloatLE(36);
     mapped.velocityZ = message.readFloatLE(40);
-    mapped.angularVelocityX = message.readFloatLE(44);          // In the car's local space; X = pitch, Y = yaw, Z = roll
+    mapped.angularVelocityX = message.readFloatLE(44); // In the car's local space; X = pitch, Y = yaw, Z = roll
     mapped.angularVelocityY = message.readFloatLE(48);
     mapped.angularVelocityZ = message.readFloatLE(52);
     mapped.yaw = message.readFloatLE(56);
     mapped.pitch = message.readFloatLE(60);
     mapped.roll = message.readFloatLE(64);
-    mapped.normSuspensionTravelFL = message.readFloatLE(68);    // Suspension travel normalized: 0.0f = max stretch; 1.0 = max compression
+    mapped.normSuspensionTravelFL = message.readFloatLE(68); // Suspension travel normalized: 0.0f = max stretch; 1.0 = max compression
     mapped.normSuspensionTravelFR = message.readFloatLE(72);
     mapped.normSuspensionTravelRL = message.readFloatLE(76);
     mapped.normSuspensionTravelRR = message.readFloatLE(80);
-    mapped.tireSlipRatioFL = message.readFloatLE(84);           // Tire normalized slip ratio, = 0 means 100% grip and |ratio| > 1.0 means loss of grip
+    mapped.tireSlipRatioFL = message.readFloatLE(84); // Tire normalized slip ratio, = 0 means 100% grip and |ratio| > 1.0 means loss of grip
     mapped.tireSlipRatioFR = message.readFloatLE(88);
     mapped.tireSlipRatioRL = message.readFloatLE(92);
     mapped.tireSlipRatioRR = message.readFloatLE(96);
-    mapped.wheelRotationSpeedFL = message.readFloatLE(100);     // Wheel rotation speed radians/sec
+    mapped.wheelRotationSpeedFL = message.readFloatLE(100); // Wheel rotation speed radians/sec
     mapped.wheelRotationSpeedFR = message.readFloatLE(104);
     mapped.wheelRotationSpeedRL = message.readFloatLE(108);
     mapped.wheelRotationSpeedRR = message.readFloatLE(112);
-    mapped.wheelOnRumbleStripFL = message.readFloatLE(116);     // = 1 when wheel is on rumble strip, = 0 when off
+    mapped.wheelOnRumbleStripFL = message.readFloatLE(116); // = 1 when wheel is on rumble strip, = 0 when off
     mapped.wheelOnRumbleStripFR = message.readFloatLE(120);
     mapped.wheelOnRumbleStripRL = message.readFloatLE(124);
     mapped.wheelOnRumbleStripRR = message.readFloatLE(128);
-    mapped.wheelInPuddleDepthFL = message.readFloatLE(132);     // = from 0 to 1, where 1 is the deepest puddle
+    mapped.wheelInPuddleDepthFL = message.readFloatLE(132); // = from 0 to 1, where 1 is the deepest puddle
     mapped.wheelInPuddleDepthFR = message.readFloatLE(136);
     mapped.wheelInPuddleDepthRL = message.readFloatLE(140);
     mapped.wheelInPuddleDepthRR = message.readFloatLE(144);
-    mapped.surfaceRumbleFL = message.readFloatLE(148);          // Non-dimensional surface rumble values passed to controller force feedback
+    mapped.surfaceRumbleFL = message.readFloatLE(148); // Non-dimensional surface rumble values passed to controller force feedback
     mapped.surfaceRumbleFR = message.readFloatLE(152);
     mapped.surfaceRumbleRL = message.readFloatLE(156);
     mapped.surfaceRumbleRR = message.readFloatLE(160);
-    mapped.tireSlipAngleFL = message.readFloatLE(164);          // Tire normalized slip angle, = 0 means 100% grip and |angle| > 1.0 means loss of grip
+    mapped.tireSlipAngleFL = message.readFloatLE(164); // Tire normalized slip angle, = 0 means 100% grip and |angle| > 1.0 means loss of grip
     mapped.tireSlipAngleFR = message.readFloatLE(168);
     mapped.tireSlipAngleRL = message.readFloatLE(172);
     mapped.tireSlipAngleRR = message.readFloatLE(176);
-    mapped.tireCombinedSlipFL = message.readFloatLE(180);       // Tire normalized combined slip, = 0 means 100% grip and |slip| > 1.0 means loss of grip
+    mapped.tireCombinedSlipFL = message.readFloatLE(180); // Tire normalized combined slip, = 0 means 100% grip and |slip| > 1.0 means loss of grip
     mapped.tireCombinedSlipFR = message.readFloatLE(184);
     mapped.tireCombinedSlipRL = message.readFloatLE(188);
     mapped.tireCombinedSlipRR = message.readFloatLE(192);
@@ -109,18 +148,18 @@ function mapData(message) {
     mapped.suspensionTravelMetersFR = message.readFloatLE(200);
     mapped.suspensionTravelMetersRL = message.readFloatLE(204);
     mapped.suspensionTravelMetersRR = message.readFloatLE(208);
-    mapped.carOrdinal = message.readInt32LE(212);               // Unique ID of the car make/model
-    mapped.carClass = message.readInt32LE(216);                 // Between 0 (D -- worst cars) and 6 (X class -- best cars) inclusive 
-    mapped.carPerformanceIndex = message.readInt32LE(220);      // Between 100 (slowest car) and 999 (fastest car) inclusive
-    mapped.drivetrainType = message.readInt32LE(224);           // Corresponds to EDrivetrainType; 0 = FWD, 1 = RWD, 2 = AWD
-    mapped.numCylinders = message.readInt32LE(228);             // Number of cylinders in the engine
+    mapped.carOrdinal = message.readInt32LE(212); // Unique ID of the car make/model
+    mapped.carClass = message.readInt32LE(216); // Between 0 (D -- worst cars) and 6 (X class -- best cars) inclusive 
+    mapped.carPerformanceIndex = message.readInt32LE(220); // Between 100 (slowest car) and 999 (fastest car) inclusive
+    mapped.drivetrainType = message.readInt32LE(224); // Corresponds to EDrivetrainType; 0 = FWD, 1 = RWD, 2 = AWD
+    mapped.numCylinders = message.readInt32LE(228); // Number of cylinders in the engine
 
-    mapped.positionX = message.readFloatLE(244);                // Position (meters)
+    mapped.positionX = message.readFloatLE(244); // Position (meters)
     mapped.positionY = message.readFloatLE(248);
     mapped.positionZ = message.readFloatLE(252);
-    mapped.speed = message.readFloatLE(256);                    // Meters per second
-    mapped.power = message.readFloatLE(260);                    // Watts
-    mapped.torque = message.readFloatLE(264);                   // Newton meter
+    mapped.speed = message.readFloatLE(256); // Meters per second
+    mapped.power = message.readFloatLE(260); // Watts
+    mapped.torque = message.readFloatLE(264); // Newton meter
     mapped.tireTempFL = message.readFloatLE(268);
     mapped.tireTempFR = message.readFloatLE(272);
     mapped.tireTempRL = message.readFloatLE(276);
@@ -187,4 +226,3 @@ function createWindow() {
 }
 
 app.whenReady().then(createWindow)
-console.log(process.cwd());

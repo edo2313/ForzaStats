@@ -87,12 +87,54 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="mdc-layout-grid__cell">
+                                <div class="mdc-card demo-card">
+                                    <div class="mdc-card__primary-action demo-card__primary-action" tabindex="0">
+                                        <div class="mdc-card__media mdc-card__media--square demo-card__media"
+                                            style="background-image: url('../res/img/admin.png');">
+                                        </div>
+                                        <div class="demo-card__primary">
+                                            <h2 class="demo-card__title mdc-typography mdc-typography--headline6">Enable localhost loopback</h2>
+                                        </div>
+                                        <div class="demo-card__secondary mdc-typography mdc-typography--body2">Enable the use of telemetry data on the local PC. Since Windows 8 this is necessary. When you click the button, it will ask you for elevated (Administrator) permissions, as the game files are owned by the OS and not by the user. You only need to do this once (or if you reinstall the game I think)</div>
+                                    </div>
+                                    <div class="mdc-card__actions">
+                                        <div class="mdc-card__action-buttons">
+                                            <a class="mdc-button mdc-card__action mdc-card__action--button"
+                                                href="javascript:enableLocalhost()">
+                                                <span class="mdc-button__ripple"></span> Enable loopback
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <h1 class="mdc-typography--subtitle1" style="text-align: center;">Made with ❤️ in my bedroom during quarantine</h1>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="mdc-dialog" id="success">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="my-dialog-title"
+            aria-describedby="my-dialog-content">
+            <h2 class="mdc-dialog__title" id="my-dialog-title"></h2>
+            <div class="mdc-dialog__content" id="my-dialog-content">
+                Localhost loopack successfully enabled!
+            </div>
+            <footer class="mdc-dialog__actions">
+                <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">Yay!</span>
+                </button>
+            </footer>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
     </div>
     <script type="text/javascript" src="../res/js/about.js"></script>
     <script type="text/javascript" src="../res/js/design.js"></script>

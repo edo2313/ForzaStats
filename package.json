@@ -23,6 +23,7 @@
     "material-components-web": "^5.1.0",
     "node-gyp": "^7.0.0",
     "node-ipc": "^9.1.1",
+    "sudo-prompt": "^9.2.1",
     "update-electron-app": "^1.5.0",
     "utf-8-validate": "^5.0.2",
     "ws": "^7.3.1"
