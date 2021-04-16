@@ -7,7 +7,7 @@
   "license": "MIT",
   "author": {
     "name": "edo2313",
-    "url": "https://github.com/edo-2313"
+    "url": "https://github.com/edo2313"
   },
   "scripts": {
     "start": "electron-forge start",
@@ -37,7 +37,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "iconUrl": "https://raw.githubusercontent.com/edo-2313/ForzaStats/master/logo.ico",
+            "iconUrl": "https://raw.githubusercontent.com/edo2313/ForzaStats/master/logo.ico",
             "setupIcon": "logo.ico",
             "name": "ForzaStats"
           }
@@ -48,7 +48,7 @@
           "name": "@electron-forge/publisher-github",
           "config": {
             "repository": {
-              "owner": "edo-2313",
+              "owner": "edo2313",
               "name": "ForzaStats"
             },
             "prerelease": "true"

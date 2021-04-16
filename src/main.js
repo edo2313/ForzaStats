@@ -45,7 +45,7 @@ function enableLocalhost() {
         name: 'Electron',
     };
 
-    sudo.exec('CheckNetIsolation.exe LoopbackExempt -a -n=microsoft.apollobasegame_8wekyb3d8bbwe', options,
+    sudo.exec('CheckNetIsolation.exe LoopbackExempt -a -n=Microsoft.SunriseBaseGame_8wekyb3d8bbwe', options,
         function (error, stdout, stderr) {
             if (error) throw error;
             if (stdout.startsWith('OK.')) {
