@@ -223,6 +223,7 @@ function createWindow() {
     // e carica l'index.html dell'app
     win.loadFile(path.resolve(__dirname, './pages/index.html'))
     win.setMenuBarVisibility(false)
+    win.webContents.openDevTools()
 }
 
 app.whenReady().then(createWindow)
