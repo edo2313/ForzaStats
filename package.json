@@ -58,10 +58,10 @@
     }
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.61",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.61",
-    "@electron-forge/maker-zip": "^6.0.0-beta.61",
-    "@electron-forge/publisher-github": "^6.0.0-beta.61",
-    "electron": "^18.3.7"
+    "@electron-forge/cli": "^6.4.2",
+    "@electron-forge/maker-squirrel": "^6.4.2",
+    "@electron-forge/maker-zip": "^6.4.2",
+    "@electron-forge/publisher-github": "^6.4.2",
+    "electron": "^26.3.0"
   }
 }
